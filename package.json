@@ -1,0 +1,17 @@
+{
+  "name": "singbox-config-gen",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/js-yaml": "^4.0.9",
+    "@types/lodash-es": "^4.17.12"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "lodash-es": "^4.17.21"
+  }
+}
