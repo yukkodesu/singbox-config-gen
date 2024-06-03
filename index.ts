@@ -2,7 +2,7 @@ import yaml from "js-yaml";
 import { cloneDeep } from "lodash-es";
 import { createInterface } from "readline/promises";
 import { readFileToJSON, writeJSONToFile } from "./src/utils";
-import type { Subs } from "./src/types";
+import type { SingboxConfig } from "./src/types";
 
 const rl = createInterface({
     input: process.stdin,
@@ -15,7 +15,7 @@ rl.close();
 const sub = await (await fetch(subUrl)).text();
 const doc = yaml.load(sub);
 
-const base_config = await readFileToJSON<Subs>("base_configs/base_config.json");
+const base_config = await readFileToJSON<SingboxConfig>("base_configs/base_config.json");
 const tun = await readFileToJSON("base_configs/tun.json");
 const proxy_names: string[] = [];
 const outbounds = doc.proxies.map((it: {
@@ -42,7 +42,7 @@ for (const i of base_config.route.rule_set) {
 }
 const pc_config = cloneDeep(base_config);
 pc_config.outbounds = [...base_config.outbounds].concat(outbounds);
-let select = pc_config.outbounds.find((it: { tag: string; }) => it.tag === "select");
+let select = pc_config.outbounds.find((it: { tag: string; }) => it.tag === "proxy");
 if (select) {
     select.outbounds = [...proxy_names];
     select.default = proxy_names[20];
@@ -50,7 +50,7 @@ if (select) {
 
 const mobile_config = cloneDeep(pc_config);
 mobile_config.inbounds = [tun];
-select = mobile_config.outbounds.find((it: { tag: string; }) => it.tag === "select");
+select = mobile_config.outbounds.find((it: { tag: string; }) => it.tag === "proxy");
 select && delete select.default;
 
 writeJSONToFile("output/pc_config.json", pc_config);

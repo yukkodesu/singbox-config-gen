@@ -1,4 +1,4 @@
-export type Subs = {
+export type SingboxConfig = {
     outbounds: OutBounds[];
     inbounds: InBounds[];
     route: {

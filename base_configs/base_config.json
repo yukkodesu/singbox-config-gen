@@ -10,12 +10,8 @@
       },
       {
         "tag": "local",
-        "address": "223.5.5.5",
+        "address": "https://223.5.5.5/dns-query",
         "detour": "direct"
-      },
-      {
-        "tag": "remote",
-        "address": "fakeip"
       }
     ],
     "rules": [
@@ -24,19 +20,32 @@
         "server": "local"
       },
       {
-        "query_type": [
-          "A",
-          "AAAA"
+        "clash_mode": "Direct",
+        "server": "local"
+      },
+      {
+        "clash_mode": "Global",
+        "server": "google"
+      },
+      {
+        "rule_set": "geosite-geolocation-cn",
+        "server": "local"
+      },
+      {
+        "type": "logical",
+        "mode": "and",
+        "rules": [
+          {
+            "rule_set": "geosite-geolocation-!cn",
+            "invert": true
+          },
+          {
+            "rule_set": "geoip-cn"
+          }
         ],
-        "server": "remote"
+        "server": "google"
       }
-    ],
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-    },
-    "independent_cache": true
+    ]
   },
   "inbounds": [
     {
@@ -58,10 +67,19 @@
     },
     {
       "type": "selector",
-      "tag": "select",
+      "tag": "proxy",
       "outbounds": [],
-      "default": "Japan",
+      "default": "",
       "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "select",
+      "outbounds": [
+        "proxy",
+        "direct"
+      ],
+      "default": "proxy"
     },
     {
       "type": "dns",
