@@ -10,8 +10,12 @@
       },
       {
         "tag": "local",
-        "address": "https://223.5.5.5/dns-query",
+        "address": "223.5.5.5",
         "detour": "direct"
+      },
+      {
+        "tag": "remote",
+        "address": "fakeip"
       }
     ],
     "rules": [
@@ -20,32 +24,16 @@
         "server": "local"
       },
       {
-        "clash_mode": "Direct",
-        "server": "local"
-      },
-      {
-        "clash_mode": "Global",
-        "server": "google"
-      },
-      {
-        "rule_set": "geosite-geolocation-cn",
-        "server": "local"
-      },
-      {
-        "type": "logical",
-        "mode": "and",
-        "rules": [
-          {
-            "rule_set": "geosite-geolocation-!cn",
-            "invert": true
-          },
-          {
-            "rule_set": "geoip-cn"
-          }
-        ],
-        "server": "google"
+        "query_type": ["A", "AAAA"],
+        "server": "remote"
       }
-    ]
+    ],
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    },
+    "independent_cache": true
   },
   "inbounds": [
     {
@@ -75,10 +63,7 @@
     {
       "type": "selector",
       "tag": "select",
-      "outbounds": [
-        "proxy",
-        "direct"
-      ],
+      "outbounds": ["proxy", "direct"],
       "default": "proxy"
     },
     {
@@ -123,22 +108,15 @@
         "outbound": "block"
       },
       {
-        "rule_set": [
-          "geoip-cn",
-          "geosite-geolocation-cn"
-        ],
+        "rule_set": ["geoip-cn", "geosite-geolocation-cn"],
         "outbound": "direct"
       },
       {
-        "rule_set": [
-          "geosite-geolocation-!cn"
-        ],
+        "rule_set": ["geosite-geolocation-!cn"],
         "outbound": "select"
       },
       {
-        "rule_set": [
-          "geoip-cn"
-        ],
+        "rule_set": ["geoip-cn"],
         "invert": true,
         "outbound": "select"
       }
