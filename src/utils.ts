@@ -12,9 +12,8 @@ export const writeJSONToFile = async (path: string, obj: any) => {
 }
 
 export function safeMkdir(filePath: string) {
-    const dirname = path.dirname(filePath);
-    if (existsSync(dirname)) {
+    if (existsSync(filePath)) {
       return;
     }
-    mkdirSync(dirname, { recursive: true });
+    mkdirSync(filePath, { recursive: true });
   }
