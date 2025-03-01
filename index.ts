@@ -1,7 +1,7 @@
 import yaml from "js-yaml";
 import { cloneDeep } from "lodash-es";
 import { createInterface } from "readline/promises";
-import { readFileToJSON, writeJSONToFile } from "./src/utils";
+import { readFileToJSON, safeMkdir, writeJSONToFile } from "./src/utils";
 import type { ClashProxy, SingboxConfig } from "./src/types";
 
 const rl = createInterface({
@@ -57,5 +57,6 @@ select = mobile_config.outbounds.find(
 );
 select && delete select.default;
 
+safeMkdir("output");
 writeJSONToFile("output/pc_config.json", pc_config);
 writeJSONToFile("output/mobile_config.json", mobile_config);
