@@ -2,7 +2,7 @@ import yaml from "js-yaml";
 import { cloneDeep } from "lodash-es";
 import { createInterface } from "readline/promises";
 import { readFileToJSON, writeJSONToFile } from "./src/utils";
-import type { SingboxConfig } from "./src/types";
+import type { ClashProxy, SingboxConfig } from "./src/types";
 
 const rl = createInterface({
   input: process.stdin,
@@ -13,41 +13,29 @@ const subUrl = await rl.question("Input your subscription:\n");
 rl.close();
 
 const sub = await (await fetch(subUrl)).text();
-const doc = yaml.load(sub);
+const doc = yaml.load(sub) as { proxies: ClashProxy[] };
 
 const base_config = await readFileToJSON<SingboxConfig>(
   "base_configs/base_config.json"
 );
 const tun = await readFileToJSON("base_configs/tun.json");
 const proxy_names: string[] = [];
-const outbounds = doc.proxies.map(
-  (it: {
-    name: string;
-    type: string;
-    server: string;
-    port: string;
-    cipher: string;
-    password: string;
-    udp?: boolean;
-    plugin?: string;
-    "plugin-opts"?: Record<string, string>;
-  }) => {
-    proxy_names.push(it.name);
-    return {
-      type: it.type === "ss" ? "shadowsocks" : it.type,
-      server: it.server,
-      server_port: it.port,
-      method: it.cipher,
-      password: it.password,
-      plugin: it.plugin?.includes("obfs") ? "obfs-local" : undefined,
-      plugin_opts:
-        it.plugin && it.plugin.includes("obfs")
-          ? `obfs=${it["plugin-opts"]?.mode};obfs-host=${it["plugin-opts"]?.host}`
-          : undefined,
-      tag: it.name,
-    };
-  }
-);
+const outbounds = doc.proxies.map((it) => {
+  proxy_names.push(it.name);
+  return {
+    type: it.type === "ss" ? "shadowsocks" : it.type,
+    server: it.server,
+    server_port: Number(it.port),
+    method: it.cipher,
+    password: it.password,
+    plugin: it.plugin?.includes("obfs") ? "obfs-local" : undefined,
+    plugin_opts:
+      it.plugin && it.plugin.includes("obfs")
+        ? `obfs=${it["plugin-opts"]?.mode};obfs-host=${it["plugin-opts"]?.host}`
+        : undefined,
+    tag: it.name,
+  };
+});
 
 for (const i of base_config.route.rule_set) {
   i.download_detour = proxy_names[3];
