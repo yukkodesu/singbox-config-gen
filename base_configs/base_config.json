@@ -40,8 +40,7 @@
       "type": "mixed",
       "tag": "mixed-in",
       "listen": "127.0.0.1",
-      "listen_port": 7890,
-      "set_system_proxy": true
+      "listen_port": 7890
     }
   ],
   "outbounds": [
@@ -141,7 +140,6 @@
         "format": "binary",
         "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"
       }
-    ],
-    "auto_detect_interface": true
+    ]
   }
 }
