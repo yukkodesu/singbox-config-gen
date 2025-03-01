@@ -2,6 +2,9 @@
   "name": "singbox-config-gen",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "start": "bun run index.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/js-yaml": "^4.0.9",
