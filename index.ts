@@ -1,8 +1,8 @@
 import yaml from "js-yaml";
 import { cloneDeep } from "lodash-es";
-import { createInterface } from "readline/promises";
-import { readFileToJSON, safeMkdir, writeJSONToFile } from "./src/utils";
-import type { ClashProxy, SingboxConfig } from "./src/types";
+import { createInterface } from "node:readline/promises";
+import { readFileToJSON, safeMkdir, writeJSONToFile } from "./src/utils.ts";
+import type { ClashProxy, SingboxConfig } from "./src/types.ts";
 
 const rl = createInterface({
   input: process.stdin,

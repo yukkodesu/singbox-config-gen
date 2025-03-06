@@ -1,6 +1,5 @@
-import { existsSync, mkdirSync } from "fs";
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
+import { existsSync, mkdirSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
 
 export const readFileToJSON = async <T>(path: string): Promise<T> => {
   return JSON.parse(await readFile(path, { encoding: "utf-8" }));
