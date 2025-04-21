@@ -1,5 +1,5 @@
 import yaml from "js-yaml";
-import { cloneDeep } from "lodash-es";
+import { cloneDeep } from "es-toolkit";
 import { createInterface } from "node:readline/promises";
 import { readFileToJSON, safeMkdir, writeJSONToFile } from "./src/utils.ts";
 import type { ClashProxy, SingboxConfig } from "./src/types.ts";
