@@ -60,6 +60,10 @@
       "type": "direct"
     },
     {
+      "tag": "block",
+      "type": "block"
+    },
+    {
       "type": "selector",
       "tag": "proxy",
       "outbounds": [
