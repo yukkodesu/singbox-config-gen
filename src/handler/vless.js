@@ -15,10 +15,10 @@ export const vlessHandler = (clashProxy) => {
         public_key: reality["public-key"],
         short_id: reality["short-id"],
       },
-    },
-    utls: {
-      enabled: !!it["client-fingerprint"],
-      fingerprint: it["client-fingerprint"],
+      utls: {
+        enabled: !!it["client-fingerprint"],
+        fingerprint: it["client-fingerprint"],
+      },
     },
   };
 };

@@ -4,6 +4,7 @@ import { readFileToJSON, safeMkdir, writeJSONToFile } from "./src/utils.js";
 import { shadowsocksHandler } from "./src/handler/shadowsocks.js";
 import { outboundNamingMap } from "./src/outbound_map.js";
 import { vlessHandler } from "./src/handler/vless.js";
+import { trojanHandler } from "./src/handler/trojan.js";
 const args = process.argv.slice(2);
 
 const subIndex = args.indexOf("--clash-sub");
@@ -27,6 +28,7 @@ const clashProxies = clashSub.proxies.map((item) => [item.name, item]);
 const handlers = {
   ss: shadowsocksHandler,
   vless: vlessHandler,
+  trojan: trojanHandler,
 };
 
 const singProxies = [];
