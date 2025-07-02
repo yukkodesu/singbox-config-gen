@@ -5,35 +5,46 @@
   "dns": {
     "servers": [
       {
-        "tag": "google",
-        "address": "tls://8.8.8.8"
+        "tag": "remote",
+        "address": "https://8.8.8.8/dns-query",
+        "detour": "select",
+        "strategy": "prefer_ipv4"
+      },
+      {
+        "tag": "query",
+        "address": "https://dns.alidns.com/dns-query",
+        "address_resolver": "local",
+        "detour": "direct",
+        "strategy": "prefer_ipv4"
       },
       {
         "tag": "local",
-        "address": "223.5.5.5",
-        "detour": "direct"
+        "address": "local"
       },
       {
-        "tag": "remote",
-        "address": "fakeip"
+        "address": "rcode://success",
+        "tag": "block"
       }
     ],
     "rules": [
       {
         "outbound": "any",
+        "server": "query"
+      },
+      {
+        "clash_mode": "direct",
         "server": "local"
       },
       {
-        "query_type": ["A", "AAAA"],
+        "clash_mode": "global",
         "server": "remote"
+      },
+      {
+        "rule_set": "geosite-cn",
+        "server": "local"
       }
     ],
-    "fakeip": {
-      "enabled": true,
-      "inet4_range": "198.18.0.0/15",
-      "inet6_range": "fc00::/18"
-    },
-    "independent_cache": true
+    "final": "remote"
   },
   "inbounds": [
     {
@@ -45,101 +56,528 @@
   ],
   "outbounds": [
     {
-      "type": "direct",
-      "tag": "direct"
+      "tag": "direct",
+      "type": "direct"
     },
     {
-      "type": "block",
-      "tag": "block"
-    },
-    {
-      "type": "dns",
-      "tag": "dns-out"
+      "tag": "block",
+      "type": "block"
     },
     {
       "type": "selector",
       "tag": "proxy",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "direct"
+      ],
+      "default": "",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "🇭🇰 Hong Kong",
       "outbounds": [],
       "default": "",
       "interrupt_exist_connections": true
     },
     {
       "type": "selector",
-      "tag": "select",
-      "outbounds": ["proxy", "direct"],
-      "default": "proxy"
+      "tag": "🇸🇬 Singapore",
+      "outbounds": [],
+      "default": "",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "🇯🇵 Japan",
+      "outbounds": [],
+      "default": "",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "🇺🇸 United States",
+      "outbounds": [],
+      "default": "",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "🇨🇳 Taiwan",
+      "outbounds": [],
+      "default": "",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "🇩🇪 Germany",
+      "outbounds": [],
+      "default": "",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "🇬🇧 United Kingdom",
+      "outbounds": [],
+      "default": "",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "Others",
+      "outbounds": [],
+      "default": "",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "apple",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "direct",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "bilibili",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "direct",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "netflix",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "proxy",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "disney",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "proxy",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "tiktok",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "direct",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "openai",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "proxy",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "steam",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "direct",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "google",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "direct",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "paypal",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "proxy",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "twitter",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "proxy",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "telegram",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "proxy",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
+      "tag": "microsoft",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "direct",
+      "interrupt_exist_connections": true
     }
   ],
   "route": {
     "rules": [
       {
-        "type": "logical",
-        "mode": "or",
-        "rules": [
-          {
-            "protocol": "dns"
-          },
-          {
-            "port": 53
-          }
-        ],
-        "outbound": "dns-out"
-      },
-      {
         "ip_is_private": true,
         "outbound": "direct"
       },
       {
+        "rule_set": "apple-site",
+        "outbound": "apple"
+      },
+      {
+        "rule_set": "bilibili-site",
+        "outbound": "bilibili"
+      },
+      {
         "type": "logical",
         "mode": "or",
         "rules": [
           {
-            "port": 853
+            "rule_set": "netflix-site"
           },
           {
-            "network": "udp",
-            "port": 443
-          },
-          {
-            "protocol": "stun"
+            "rule_set": "netflix-ip"
           }
         ],
-        "outbound": "block"
+        "outbound": "netflix"
       },
       {
-        "rule_set": ["geoip-cn", "geosite-geolocation-cn"],
+        "rule_set": "disney-site",
+        "outbound": "disney"
+      },
+      {
+        "rule_set": "tiktok-site",
+        "outbound": "tiktok"
+      },
+      {
+        "rule_set": "openai-site",
+        "outbound": "openai"
+      },
+      {
+        "rule_set": "steam-site",
+        "outbound": "steam"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "rule_set": "google-site"
+          },
+          {
+            "rule_set": "google-ip"
+          }
+        ],
+        "outbound": "google"
+      },
+      {
+        "rule_set": "paypal-site",
+        "outbound": "paypal"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "rule_set": "twitter-site"
+          },
+          {
+            "rule_set": "twitter-ip"
+          }
+        ],
+        "outbound": "twitter"
+      },
+      {
+        "type": "logical",
+        "mode": "or",
+        "rules": [
+          {
+            "rule_set": "telegram-site"
+          },
+          {
+            "rule_set": "telegram-ip"
+          }
+        ],
+        "outbound": "telegram"
+      },
+      {
+        "rule_set": "microsoft-site",
+        "outbound": "microsoft"
+      },
+      {
+        "rule_set": "private-site",
         "outbound": "direct"
       },
       {
-        "rule_set": ["geosite-geolocation-!cn"],
-        "outbound": "select"
+        "rule_set": "geoip-cn",
+        "outbound": "direct"
       },
       {
-        "rule_set": ["geoip-cn"],
-        "invert": true,
-        "outbound": "select"
+        "rule_set": "geosite-cn",
+        "outbound": "direct"
       }
     ],
-    "final": "direct",
     "rule_set": [
       {
-        "type": "remote",
-        "tag": "geosite-geolocation-cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs"
-      },
-      {
-        "type": "remote",
-        "tag": "geosite-geolocation-!cn",
-        "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs"
-      },
-      {
-        "type": "remote",
         "tag": "geoip-cn",
+        "type": "remote",
         "format": "binary",
-        "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs"
+        "download_detour": "proxy",
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/srs/cn.srs"
+      },
+      {
+        "tag": "geosite-cn",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-cn.srs"
+      },
+      {
+        "tag": "apple-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-apple.srs"
+      },
+      {
+        "tag": "bilibili-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-bilibili.srs"
+      },
+      {
+        "tag": "netflix-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-netflix.srs"
+      },
+      {
+        "tag": "netflix-ip",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/srs/netflix.srs"
+      },
+      {
+        "tag": "disney-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-disney.srs"
+      },
+      {
+        "tag": "tiktok-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-tiktok.srs"
+      },
+      {
+        "tag": "openai-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-openai.srs"
+      },
+      {
+        "tag": "steam-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-steam.srs"
+      },
+      {
+        "tag": "google-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-google.srs"
+      },
+      {
+        "tag": "google-ip",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/srs/google.srs"
+      },
+      {
+        "tag": "paypal-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-paypal.srs"
+      },
+      {
+        "tag": "twitter-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-twitter.srs"
+      },
+      {
+        "tag": "twitter-ip",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/srs/twitter.srs"
+      },
+      {
+        "tag": "telegram-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-telegram.srs"
+      },
+      {
+        "tag": "telegram-ip",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/srs/telegram.srs"
+      },
+      {
+        "tag": "microsoft-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-microsoft.srs"
+      },
+      {
+        "tag": "private-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-private.srs"
       }
-    ]
+    ],
+    "final": "proxy"
   }
 }
