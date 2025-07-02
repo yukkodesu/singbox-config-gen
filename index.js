@@ -3,15 +3,21 @@ import { cloneDeep } from "es-toolkit";
 import { readFileToJSON, safeMkdir, writeJSONToFile } from "./src/utils.js";
 import { shadowsocksHandler } from "./src/handler/shadowsocks.js";
 import { outboundNamingMap } from "./src/outbound_map.js";
-import { exit } from "node:process";
-
+import { vlessHandler } from "./src/handler/vless.js";
+import { trojanHandler } from "./src/handler/trojan.js";
 const args = process.argv.slice(2);
 
 const subIndex = args.indexOf("--clash-sub");
 const subUrl = subIndex !== -1 ? args[subIndex + 1] : null;
 if (!subUrl) throw new Error("No subscription url");
 
-const sub = await (await fetch(subUrl)).text();
+const sub = await (
+  await fetch(subUrl, {
+    headers: {
+      "User-Agent": "clash-verge/v2.3.1",
+    },
+  })
+).text();
 const clashSub = yaml.load(sub);
 
 const base_config = readFileToJSON("base_configs/base_config.json");
@@ -21,6 +27,8 @@ const clashProxies = clashSub.proxies.map((item) => [item.name, item]);
 
 const handlers = {
   ss: shadowsocksHandler,
+  vless: vlessHandler,
+  trojan: trojanHandler,
 };
 
 const singProxies = [];
@@ -31,7 +39,10 @@ const proxySelector = base_config.outbounds.find(
 for (const [_, item] of clashProxies) {
   const type = item.type;
   const handler = handlers[type];
-  if (!handler) continue;
+  if (!handler) {
+    console.warn(`unsupport outbound ${type}`);
+    continue;
+  }
   const convertedOutbound = handler(item);
   singProxies.push(convertedOutbound);
   proxySelector.outbounds.push(convertedOutbound.tag);
@@ -61,6 +72,16 @@ for (const item of singProxies) {
   if (!isMatch) {
     others.outbounds.push(item.tag);
   }
+}
+
+// this is for robustness. sing-box doesn't support empty outbounds
+outboundSelector.values().forEach((item) => {
+  if (item.outbounds.length === 0) {
+    item.outbounds.push("direct");
+  }
+});
+if (others.outbounds.length === 0) {
+  item.push("direct");
 }
 
 const pcInbound = base_config.inbounds.find((item) => item.tag === "mixed-in");
