@@ -74,6 +74,16 @@ for (const item of singProxies) {
   }
 }
 
+// this is for robustness. sing-box doesn't support empty outbounds
+outboundSelector.values().forEach((item) => {
+  if (item.outbounds.length === 0) {
+    item.outbounds.push("direct");
+  }
+});
+if (others.outbounds.length === 0) {
+  item.push("direct");
+}
+
 const pcInbound = base_config.inbounds.find((item) => item.tag === "mixed-in");
 pcInbound["set_system_proxy"] = true;
 const mobile_config = cloneDeep(base_config);
