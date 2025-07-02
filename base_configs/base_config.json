@@ -55,6 +55,10 @@
   ],
   "outbounds": [
     {
+      "tag": "direct",
+      "type": "direct"
+    },
+    {
       "type": "selector",
       "tag": "proxy",
       "outbounds": [
