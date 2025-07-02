@@ -63,6 +63,8 @@ for (const item of singProxies) {
   }
 }
 
+const pcInbound = base_config.inbounds.find((item) => item.tag === "mixed-in");
+pcInbound["set_system_proxy"] = true;
 const mobile_config = cloneDeep(base_config);
 mobile_config.inbounds = [tun];
 const select = mobile_config.outbounds.find((it) => it.tag === "proxy");
