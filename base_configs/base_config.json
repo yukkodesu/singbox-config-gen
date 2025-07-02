@@ -69,7 +69,8 @@
         "🇺🇸 United States",
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
-        "🇬🇧 United Kingdom"
+        "🇬🇧 United Kingdom",
+        "direct"
       ],
       "default": "",
       "interrupt_exist_connections": true
@@ -141,9 +142,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "direct",
       "interrupt_exist_connections": true
     },
     {
@@ -157,9 +159,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "direct",
       "interrupt_exist_connections": true
     },
     {
@@ -173,9 +176,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "proxy",
       "interrupt_exist_connections": true
     },
     {
@@ -189,9 +193,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "proxy",
       "interrupt_exist_connections": true
     },
     {
@@ -205,9 +210,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "direct",
       "interrupt_exist_connections": true
     },
     {
@@ -221,9 +227,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "proxy",
       "interrupt_exist_connections": true
     },
     {
@@ -237,9 +244,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "direct",
       "interrupt_exist_connections": true
     },
     {
@@ -253,9 +261,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "direct",
       "interrupt_exist_connections": true
     },
     {
@@ -269,9 +278,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "proxy",
       "interrupt_exist_connections": true
     },
     {
@@ -285,9 +295,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "proxy",
       "interrupt_exist_connections": true
     },
     {
@@ -301,9 +312,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "proxy",
       "interrupt_exist_connections": true
     },
     {
@@ -317,9 +329,10 @@
         "🇨🇳 Taiwan",
         "🇩🇪 Germany",
         "🇬🇧 United Kingdom",
-        "proxy"
+        "proxy",
+        "direct"
       ],
-      "default": "",
+      "default": "direct",
       "interrupt_exist_connections": true
     }
   ],
