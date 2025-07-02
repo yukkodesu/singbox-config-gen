@@ -43,7 +43,8 @@
         "rule_set": "geosite-cn",
         "server": "local"
       }
-    ]
+    ],
+    "final": "remote"
   },
   "inbounds": [
     {
