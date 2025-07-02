@@ -12,6 +12,7 @@ export const vlessHandler = (clashProxy) => {
       enabled: !!it.tls,
       server_name: it.servername,
       reality: {
+        enabled: true,
         public_key: reality["public-key"],
         short_id: reality["short-id"],
       },
