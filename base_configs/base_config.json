@@ -7,7 +7,7 @@
       {
         "tag": "remote",
         "address": "https://8.8.8.8/dns-query",
-        "detour": "select",
+        "detour": "proxy",
         "strategy": "prefer_ipv4"
       },
       {
@@ -342,6 +342,13 @@
   ],
   "route": {
     "rules": [
+      {
+        "action": "sniff"
+      },
+      {
+        "protocol": "dns",
+        "action": "hijack-dns"
+      },
       {
         "ip_is_private": true,
         "outbound": "direct"
