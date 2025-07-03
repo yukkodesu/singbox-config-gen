@@ -613,6 +613,7 @@
         "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-private.srs"
       }
     ],
+    "auto_detect_interface": true,
     "final": "proxy"
   }
 }
