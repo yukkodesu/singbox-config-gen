@@ -239,6 +239,23 @@
     },
     {
       "type": "selector",
+      "tag": "github",
+      "outbounds": [
+        "🇭🇰 Hong Kong",
+        "🇸🇬 Singapore",
+        "🇯🇵 Japan",
+        "🇺🇸 United States",
+        "🇨🇳 Taiwan",
+        "🇩🇪 Germany",
+        "🇬🇧 United Kingdom",
+        "proxy",
+        "direct"
+      ],
+      "default": "proxy",
+      "interrupt_exist_connections": true
+    },
+    {
+      "type": "selector",
       "tag": "steam",
       "outbounds": [
         "🇭🇰 Hong Kong",
@@ -385,6 +402,10 @@
       {
         "rule_set": "openai-site",
         "outbound": "openai"
+      },
+      {
+        "rule_set": "github-site",
+        "outbound": "github"
       },
       {
         "rule_set": "steam-site",
@@ -541,6 +562,13 @@
         "format": "binary",
         "download_detour": "proxy",
         "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-paypal.srs"
+      },
+      {
+        "tag": "github-site",
+        "type": "remote",
+        "format": "binary",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-github.srs"
       },
       {
         "tag": "twitter-site",
