@@ -42,6 +42,10 @@
       {
         "rule_set": "geosite-cn",
         "server": "local"
+      },
+      {
+        "rule_set": "chinaMax",
+        "server": "local"
       }
     ],
     "final": "remote"
@@ -469,6 +473,10 @@
       {
         "rule_set": "geosite-cn",
         "outbound": "direct"
+      },
+      {
+        "rule_set": "chinaMax",
+        "outbound": "direct"
       }
     ],
     "rule_set": [
@@ -485,6 +493,13 @@
         "format": "binary",
         "download_detour": "proxy",
         "url": "https://raw.githubusercontent.com/yukkodesu/sing-geosite/rule-set/geosite-cn.srs"
+      },
+      {
+        "tag": "chinaMax",
+        "type": "remote",
+        "format": "source",
+        "download_detour": "proxy",
+        "url": "https://raw.githubusercontent.com/yukkodesu/singbox-config-gen/custom-rules/chinaMax.json"
       },
       {
         "tag": "apple-site",
