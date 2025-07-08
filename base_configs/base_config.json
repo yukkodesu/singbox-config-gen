@@ -8,7 +8,7 @@
         "tag": "remote",
         "address": "https://8.8.8.8/dns-query",
         "detour": "proxy",
-        "strategy": "prefer_ipv4"
+        "strategy": "ipv4_only"
       },
       {
         "tag": "query",
