@@ -10,12 +10,15 @@ export const vlessHandler = (clashProxy) => {
     flow: it.flow,
     tls: {
       enabled: !!it.tls,
+      insecure: !!it["skip-cert-verify"],
       server_name: it.servername,
-      reality: {
-        enabled: true,
-        public_key: reality["public-key"],
-        short_id: reality["short-id"],
-      },
+      ...(reality ? {
+        reality: {
+          enabled: true,
+          public_key: reality["public-key"],
+          short_id: reality["short-id"],
+        }
+      } : {}),
       utls: {
         enabled: !!it["client-fingerprint"],
         fingerprint: it["client-fingerprint"],
