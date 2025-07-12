@@ -3,6 +3,11 @@
     "level": "info"
   },
   "dns": {
+    "fakeip": {
+      "enabled": true,
+      "inet4_range": "198.18.0.0/15",
+      "inet6_range": "fc00::/18"
+    },
     "servers": [
       {
         "tag": "remote",
@@ -24,6 +29,10 @@
       {
         "address": "rcode://success",
         "tag": "block"
+      },
+      {
+        "tag": "fakeip",
+        "address": "fakeip"
       }
     ],
     "rules": [
@@ -32,12 +41,22 @@
         "server": "query"
       },
       {
+        "query_type": "HTTPS",
+        "server": "block"
+      },
+      {
         "clash_mode": "direct",
         "server": "local"
       },
       {
         "clash_mode": "global",
-        "server": "remote"
+        "action": "route",
+        "server": "fakeip"
+      },
+      {
+        "query_type": ["A", "AAAA"],
+        "action": "route",
+        "server": "fakeip"
       },
       {
         "rule_set": "geosite-cn",
@@ -62,10 +81,6 @@
     {
       "tag": "direct",
       "type": "direct"
-    },
-    {
-      "tag": "block",
-      "type": "block"
     },
     {
       "type": "selector",
