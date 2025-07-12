@@ -14,9 +14,9 @@ const outboundNamingMap = {
     /英国|英國|United\s*Kingdom|UK|uk|Britain|britain|Great\s*Britain|GB|gb|England|england|Scotland|scotland|Wales|wales|Northern\s*Ireland|伦敦|London|london|曼彻斯特|Manchester|manchester|利物浦|Liverpool|liverpool|伯明翰|Birmingham|birmingham|利兹|Leeds|leeds|格拉斯哥|Glasgow|glasgow|爱丁堡|Edinburgh|edinburgh/i,
 };
 let config = JSON.parse($content);
-console.log(config);
+
 let proxies = await produceArtifact({
-  name: "Kuromis",
+  name: $options._req.query.name,
   type: "subscription",
   platform: "sing-box",
   produceType: "internal",
@@ -60,7 +60,18 @@ if (others.outbounds.length === 0) {
   others.outbounds.push("direct");
 }
 
-const pcInbound = config.inbounds.find((item) => item.tag === "mixed-in");
-pcInbound["set_system_proxy"] = true;
+const device = $options._req.query.device;
+if (device === 'pc') {
+  const pcInbound = config.inbounds.find((item) => item.tag === "mixed-in");
+  pcInbound["set_system_proxy"] = true;
+} else {
+  config.inbounds = [{
+    "type": "tun",
+    "address": ["172.18.0.1/30", "fdfe:dcba:9876::1/126"],
+    "auto_route": true,
+    "strict_route": true
+  }
+  ];
+}
 
 $content = JSON.stringify(config, null, 2);
