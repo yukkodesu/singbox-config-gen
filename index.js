@@ -87,7 +87,7 @@ if (others.outbounds.length === 0) {
 const pcInbound = base_config.inbounds.find((item) => item.tag === "mixed-in");
 pcInbound["set_system_proxy"] = true;
 const mobile_config = cloneDeep(base_config);
-mobile_config.inbounds = [tun];
+mobile_config.inbounds.push(tun);
 const select = mobile_config.outbounds.find((it) => it.tag === "proxy");
 select && select.default && delete select.default;
 
